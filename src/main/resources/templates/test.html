@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form</title>
+    <link rel="stylesheet" href="css/test.css" media="screen">
+</head>
+<body>
+<div class="form-container">
+    <h2>Registration Form</h2>
+    <form action="/test" method="post">
+        <input type="hidden" th:value="${key}" name="type">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:value="${name}" required>
+
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname" th:value="${surname}" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" th:value="${password}" required>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<table border="1">
+    <tr>
+        <th>№</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Password</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="str, iterStat : ${nameList}">
+        <td th:text="${iterStat.count}"></td>
+        <td th:text="${str}"></td>
+        <td th:text="${surnameList[iterStat.index]}"></td>
+        <td th:text="${passwordList[iterStat.index]}"></td>
+        <td>
+            <form method="post" action="/update">
+                <input type="hidden" th:value="${keyList[iterStat.index]}" name="update_key">
+                <input type="submit" id="updateButton" value="Update"></input>
+            </form>
+        </td>
+        <td>
+            <form method="post" action="/delete">
+                <input type="hidden" th:value="${keyList[iterStat.index]}" name="delete_key">
+                <input type="submit" id="deleteButton" value="Delete"></input>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
